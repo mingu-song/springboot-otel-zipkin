@@ -1,0 +1,52 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:3.2.0"
+        classpath "io.spring.gradle:dependency-management-plugin:1.1.4"
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'ming.spring'
+    version = '0.0.1-SNAPSHOT'
+
+    sourceCompatibility = '17'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-aop'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        implementation 'io.micrometer:micrometer-registry-otlp:1.12.0'
+        implementation 'io.micrometer:micrometer-tracing-bridge-otel:1.2.0'
+        implementation 'io.opentelemetry:opentelemetry-exporter-otlp:1.32.0'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
+
+project(':comment-service') {
+    dependencies {
+    }
+}
+
+project(':post-service') {
+    dependencies {
+        implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.1.0'
+        implementation 'io.github.openfeign:feign-micrometer:13.1'
+        implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.1.0'
+    }
+}

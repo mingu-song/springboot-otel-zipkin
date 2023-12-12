@@ -1,0 +1,4 @@
+rootProject.name = 'springboot-otel-zipkin'
+include 'comment-service'
+include 'post-service'
+
