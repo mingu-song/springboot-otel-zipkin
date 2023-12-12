@@ -5,10 +5,11 @@ import mingu.spring.commentservice.model.Comment;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class CommentService {
-    private List<Comment> comments = List.of(
+    private final List<Comment> comments = List.of(
             new Comment(1, "nice post 1", 1),
             new Comment(2, "nice post 2", 1),
             new Comment(3, "nice post 3", 1),
@@ -22,7 +23,7 @@ public class CommentService {
 
     @NewSpan(value = "comment-service-findCommentsByPostId-span")
     public List<Comment> findCommentsByPostId(int postId) throws InterruptedException {
-        Thread.sleep(500);
+        TimeUnit.MILLISECONDS.sleep(500);
         return comments.stream().filter(comment -> comment.getPostId() == postId).toList();
     }
 }
